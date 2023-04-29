@@ -20,17 +20,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseCors();
+app.UseCors();
 
-    app.UseSwagger();
+app.UseSwagger();
 
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeekBurger v1"));
-
-    app.UseAuthorization();
-}
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GeekBurger v1"));
 
 app.UseHttpsRedirection();
 
