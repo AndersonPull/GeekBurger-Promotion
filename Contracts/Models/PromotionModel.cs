@@ -1,6 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Xml.Linq;
+using Contracts.Models;
 using Contracts.SwaggerExclude;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Contracts.Models
 {
@@ -18,11 +22,9 @@ namespace Contracts.Models
         [Required(ErrorMessage = "a Imagem é obrigatória.")]
         public string? Image { get; set; }
 
-        [Required(ErrorMessage = "o produto é obrigatóri0.")]
-        public List<ProductModel>? Product { get; set; }
+        public string? ProductsId { get; set; }
 
         [Required(ErrorMessage = "O Preço é obrigatório.")]
         public decimal Price { get; set; }
     }
 }
-

@@ -40,13 +40,8 @@ namespace BLL.Promotion.Implementation
                 StoreName = "Morumbi",
                 Image = "imagem.jpg",
                 Name = "SuperPromocao",
-                Product = new List<ProductModel>()
-                {
-                    new ProductModel(){Id = 1, Name ="Mac Loud"},
-                    new ProductModel(){Id = 2, Name ="Mac Promo"}
-                },
+                ProductsId = "222,222,22",
                 Price = 10
-
             };
 
             return response;
