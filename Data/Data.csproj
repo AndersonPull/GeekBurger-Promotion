@@ -8,9 +8,15 @@
 
   <ItemGroup>
     <None Remove="SQLServer\" />
+    <None Remove="Model\" />
+    <None Remove="SQLServer\Promotion\" />
+    <None Remove="SQLServer\Promotion\Implementation\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQLServer\" />
+    <Folder Include="Model\" />
+    <Folder Include="SQLServer\Promotion\" />
+    <Folder Include="SQLServer\Promotion\Implementation\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />

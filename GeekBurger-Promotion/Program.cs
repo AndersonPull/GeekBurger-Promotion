@@ -1,4 +1,8 @@
 ﻿using Contracts.SwaggerExclude;
+using Data.SQLServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -15,8 +19,13 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
 }));
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<DataContext>(options
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "GeekBurger", Version = "v1" });
