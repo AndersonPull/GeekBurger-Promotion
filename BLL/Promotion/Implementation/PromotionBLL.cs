@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
+using Azure;
 using BLL.Mapper;
 using Contracts.Models;
 using Data.Model;
@@ -23,8 +24,10 @@ namespace BLL.Promotion.Implementation
 
         public void Create(PromotionModel model)
         {
-            _promotionRepository.Create(_mapper.Map<PromotionEntity>(model));
-            //TODO buscar produtos
+            var response = _promotionRepository.Create(_mapper.Map<PromotionEntity>(model));
+
+            var promotion = _mapper.Map<PromotionModel>(response);
+            promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Added;
             //TODO mandar para azurebus
         }
 
@@ -38,18 +41,22 @@ namespace BLL.Promotion.Implementation
 
         public void Update(PromotionModel model)
         {
-            _promotionRepository.Create(_mapper.Map<PromotionEntity>(model));
-            //TODO buscar produtos
+            var response = _promotionRepository.Update(_mapper.Map<PromotionEntity>(model));
+            var promotion = _mapper.Map<PromotionModel>(response);
+
+            promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Modified;
             //TODO mandar para azurebus
         }
 
         public void Delete(int value)
         {
-            _promotionRepository.FindByID(value);
-            //TODO buscar produtos
+            var response = _promotionRepository.FindByID(value);
+
+            var promotion = _mapper.Map<PromotionModel>(response);
+            promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Deleted;
+
             //TODO mandar para azurebus
             _promotionRepository.Delete(value);
         }
     }
 }
-

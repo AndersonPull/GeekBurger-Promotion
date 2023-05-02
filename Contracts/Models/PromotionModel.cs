@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Xml.Linq;
+using Contracts.Enums;
 using Contracts.Models;
 using Contracts.SwaggerExclude;
 using static System.Net.Mime.MediaTypeNames;
@@ -26,5 +27,8 @@ namespace Contracts.Models
 
         [Required(ErrorMessage = "O Preço é obrigatório.")]
         public decimal Price { get; set; }
+
+        [SwaggerExclude]
+        public PromotionStateEnum PromotionState { get; set; }
     }
 }
