@@ -9,13 +9,11 @@ namespace BLL.Promotion
 
         IEnumerable<PromotionModel> GetAll();
 
-        int Create(PromotionModel model);
+        void Create(PromotionModel model);
 
         void Update(PromotionModel model);
 
         void Delete(int value);
-
-        void DeleteAll();
     }
 }
 

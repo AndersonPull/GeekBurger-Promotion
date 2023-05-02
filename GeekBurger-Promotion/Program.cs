@@ -8,7 +8,8 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the Services.
+Data.DependencyInjection.ConfigureServices(builder.Services);
+
 BLL.DependencyInjection.ConfigureServices(builder.Services);
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
@@ -17,13 +18,12 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
     .AllowAnyMethod()
     .AllowAnyHeader();
 }));
-// Add services to the container.
+
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DataContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
+    => options.UseSqlServer("Data Source=geekburger.database.windows.net,1433; Initial Catalog=geekburger; User Id=geekburger; Password=@liAdos206"));
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>

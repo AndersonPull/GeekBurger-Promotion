@@ -5,19 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.SQLServer.Promotion.Implementation
 {
-	public class PromotionRepository : IPromotionRepository
+	public class PromotionRepository : GenericRepository<PromotionEntity>, IPromotionRepository
     {
-        private DataContext _context;
-
-        private DbSet<PromotionEntity> dataset;
-        public PromotionRepository(DataContext context)
-        {
-            _context = context;
-            dataset = _context.Set<PromotionEntity>();
-        }
+        public PromotionRepository(DataContext context) : base(context) { }
 
         public PromotionEntity FindByStoreName(string storeName)
-            => dataset.SingleOrDefault(promotion => promotion.StoreName.Equals(storeName));
+            => _context.Promotion.SingleOrDefault(promotion => promotion.StoreName.Equals(storeName));
     }
 }
 

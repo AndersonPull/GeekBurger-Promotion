@@ -74,15 +74,6 @@ namespace GeekBurger_Promotion.Controllers
 
             return NoContent();
         }
-
-        [HttpDelete("all")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete()
-        {
-            _bll.DeleteAll();
-
-            return NoContent();
-        }
     }
 }
 

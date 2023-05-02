@@ -7,7 +7,8 @@ namespace Data.SQLServer
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options){}
+        public DataContext() {}
+        public DataContext(DbContextOptions<DataContext> options) : base(options) {}
 
         public DbSet<PromotionEntity> Promotion { get; set; }
     }

@@ -6,7 +6,7 @@ namespace Data.SQLServer
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private DataContext _context;
+        protected DataContext _context;
 
         private DbSet<T> dataset;
         public GenericRepository(DataContext context)
@@ -18,16 +18,16 @@ namespace Data.SQLServer
         public List<T> FindAll()
             => dataset.ToList();
 
-        public T FindByID(long id)
+        public T FindByID(int id)
             => dataset.SingleOrDefault(p => p.Id.Equals(id));
 
-        public T Create(T item)
+        public T Create(T value)
         {
             try
             {
-                dataset.Add(item);
+                dataset.Add(value);
                 _context.SaveChanges();
-                return item;
+                return value;
             }
             catch (Exception)
             {
@@ -35,14 +35,14 @@ namespace Data.SQLServer
             }
         }
 
-        public T Update(T item)
+        public T Update(T value)
         {
-            var result = dataset.SingleOrDefault(p => p.Id.Equals(item.Id));
+            var result = dataset.SingleOrDefault(p => p.Id.Equals(value.Id));
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(item);
+                    _context.Entry(result).CurrentValues.SetValues(value);
                     _context.SaveChanges();
                     return result;
                 }
@@ -55,7 +55,7 @@ namespace Data.SQLServer
                 return null;
         }
 
-        public void Delete(long id)
+        public void Delete(int id)
         {
             var result = dataset.SingleOrDefault(p => p.Id.Equals(id));
             if (result != null)
@@ -72,7 +72,7 @@ namespace Data.SQLServer
             }
         }
 
-        public bool Exists(long id)
+        public bool Exists(int id)
             => dataset.Any(p => p.Id.Equals(id));
     }
 }

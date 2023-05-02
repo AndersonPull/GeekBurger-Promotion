@@ -5,11 +5,11 @@ namespace Data.SQLServer
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        T Create(T item);
-        T FindByID(long id);
+        T Create(T value);
+        T FindByID(int id);
         List<T> FindAll();
-        T Update(T item);
-        void Delete(long id);
-        bool Exists(long id);
+        T Update(T value);
+        void Delete(int id);
+        bool Exists(int id);
     }
 }
