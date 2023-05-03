@@ -22,7 +22,7 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<RepositoryContext>(options
-    => options.UseSqlServer("Repository Source=geekburger.Repositorybase.windows.net,1433; Initial Catalog=geekburger; User Id=geekburger; Password=@liAdos206"));
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
 builder.Services.AddEndpointsApiExplorer();
 
