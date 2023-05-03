@@ -11,12 +11,16 @@
     <None Remove="SwaggerExclude\" />
     <None Remove="Utils\" />
     <None Remove="Enums\" />
+    <None Remove="Models\Request\" />
+    <None Remove="Models\Response\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="SwaggerExclude\" />
     <Folder Include="Utils\" />
     <Folder Include="Enums\" />
+    <Folder Include="Models\Request\" />
+    <Folder Include="Models\Response\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

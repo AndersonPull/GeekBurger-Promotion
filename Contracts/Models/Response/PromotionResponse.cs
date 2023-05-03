@@ -1,17 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Xml.Linq;
 using Contracts.Enums;
-using Contracts.Models;
 using Contracts.SwaggerExclude;
-using static System.Net.Mime.MediaTypeNames;
+using System.ComponentModel.DataAnnotations;
 
-namespace Contracts.Models
+namespace Contracts.Models.Response
 {
-	public class PromotionModel
+	public class PromotionResponse
 	{
-        [SwaggerExclude]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O nome é obrigatório.")]
@@ -23,12 +18,12 @@ namespace Contracts.Models
         [Required(ErrorMessage = "a Imagem é obrigatória.")]
         public string? Image { get; set; }
 
-        public string? ProductsId { get; set; }
+        public List<ProductResponse>? Products { get; set; }
 
         [Required(ErrorMessage = "O Preço é obrigatório.")]
         public decimal Price { get; set; }
 
-        [SwaggerExclude]
         public PromotionStateEnum PromotionState { get; set; }
     }
 }
+

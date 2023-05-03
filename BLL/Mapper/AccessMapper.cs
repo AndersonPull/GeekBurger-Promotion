@@ -1,6 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using Contracts.Models;
+using Contracts.Models.Request;
+using Contracts.Models.Response;
 using Repository.Model;
 
 namespace BLL.Mapper
@@ -11,8 +13,8 @@ namespace BLL.Mapper
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<PromotionEntity, PromotionModel>().ReverseMap(); ;
-
+                cfg.CreateMap<PromotionEntity, PromotionResponse>();
+                cfg.CreateMap<PromotionRequest, PromotionEntity>();
             });
             return mapperConfiguration.CreateMapper();
         }

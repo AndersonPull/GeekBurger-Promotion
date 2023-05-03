@@ -1,17 +1,18 @@
 ﻿using System;
-using Contracts.Models;
+using Contracts.Models.Request;
+using Contracts.Models.Response;
 
 namespace BLL.Promotion
 {
     public interface IPromotionBLL
     {
-        PromotionModel GetByStoreName(string StoreName);
+        PromotionResponse GetByStoreName(string StoreName);
 
-        IEnumerable<PromotionModel> GetAll();
+        IEnumerable<PromotionResponse> GetAll();
 
-        void Create(PromotionModel model);
+        void Create(PromotionRequest model);
 
-        void Update(PromotionModel model);
+        void Update(PromotionRequest model);
 
         void Delete(int value);
     }

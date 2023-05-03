@@ -1,6 +1,8 @@
 ﻿using System;
 using BLL.Promotion;
 using Contracts.Models;
+using Contracts.Models.Request;
+using Contracts.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekBurger_Promotion.Controllers
@@ -19,7 +21,7 @@ namespace GeekBurger_Promotion.Controllers
         }
 
         [HttpGet("{storeName}")]
-        [ProducesResponseType(typeof(PromotionModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PromotionResponse), StatusCodes.Status200OK)]
         public IActionResult Get([FromRoute] string storeName)
         {
             var response = _bll.GetByStoreName(storeName);
@@ -31,7 +33,7 @@ namespace GeekBurger_Promotion.Controllers
         }
 
         [HttpGet("all")]
-        [ProducesResponseType(typeof(IEnumerable<PromotionModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<PromotionResponse>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
             var response = _bll.GetAll();
@@ -44,7 +46,7 @@ namespace GeekBurger_Promotion.Controllers
 
         [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Post([FromBody] PromotionModel model)
+        public IActionResult Post([FromBody] PromotionRequest model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -56,7 +58,7 @@ namespace GeekBurger_Promotion.Controllers
 
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Put([FromBody] PromotionModel model)
+        public IActionResult Put([FromBody] PromotionRequest model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
