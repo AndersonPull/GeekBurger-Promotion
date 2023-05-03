@@ -1,14 +1,14 @@
 ﻿using Contracts.SwaggerExclude;
-using Data.SQLServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Repository.SQLServer;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Data.DependencyInjection.ConfigureServices(builder.Services);
+Repository.DependencyInjection.ConfigureServices(builder.Services);
 
 BLL.DependencyInjection.ConfigureServices(builder.Services);
 
@@ -21,8 +21,8 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<DataContext>(options
-    => options.UseSqlServer("Data Source=geekburger.database.windows.net,1433; Initial Catalog=geekburger; User Id=geekburger; Password=@liAdos206"));
+builder.Services.AddDbContext<RepositoryContext>(options
+    => options.UseSqlServer("Repository Source=geekburger.Repositorybase.windows.net,1433; Initial Catalog=geekburger; User Id=geekburger; Password=@liAdos206"));
 
 builder.Services.AddEndpointsApiExplorer();
 

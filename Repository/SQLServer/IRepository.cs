@@ -1,7 +1,7 @@
 ﻿using System;
-using Data.Model;
+using Repository.Model;
 
-namespace Data.SQLServer
+namespace Repository.SQLServer
 {
     public interface IRepository<T> where T : BaseEntity
     {

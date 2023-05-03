@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using Contracts.Models;
-using Data.Model;
+using Repository.Model;
 
 namespace BLL.Mapper
 {

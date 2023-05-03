@@ -1,10 +1,9 @@
-﻿using System;
-using Data.SQLServer;
-using Data.SQLServer.Promotion;
-using Data.SQLServer.Promotion.Implementation;
+﻿using Repository.SQLServer;
+using Repository.SQLServer.Promotion;
+using Repository.SQLServer.Promotion.Implementation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Data
+namespace Repository
 {
     public static class DependencyInjection
 	{

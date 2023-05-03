@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
-using Azure;
 using BLL.Mapper;
 using Contracts.Models;
-using Data.Model;
-using Data.SQLServer;
-using Data.SQLServer.Promotion;
+using Repository.Model;
+using Repository.SQLServer;
+using Repository.SQLServer.Promotion;
 
 namespace BLL.Promotion.Implementation
 {

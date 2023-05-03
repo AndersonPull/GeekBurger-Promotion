@@ -1,31 +1,31 @@
 ﻿using System;
-using Data.Model;
+using Repository.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.SQLServer
+namespace Repository.SQLServer
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        protected DataContext _context;
+        protected RepositoryContext _context;
 
-        private DbSet<T> dataset;
-        public GenericRepository(DataContext context)
+        private DbSet<T> Repositoryset;
+        public GenericRepository(RepositoryContext context)
         {
             _context = context;
-            dataset = _context.Set<T>();
+            Repositoryset = _context.Set<T>();
         }
 
         public List<T> FindAll()
-            => dataset.ToList();
+            => Repositoryset.ToList();
 
         public T FindByID(int id)
-            => dataset.SingleOrDefault(p => p.Id.Equals(id));
+            => Repositoryset.SingleOrDefault(p => p.Id.Equals(id));
 
         public T Create(T value)
         {
             try
             {
-                dataset.Add(value);
+                Repositoryset.Add(value);
                 _context.SaveChanges();
                 return value;
             }
@@ -37,7 +37,7 @@ namespace Data.SQLServer
 
         public T Update(T value)
         {
-            var result = dataset.SingleOrDefault(p => p.Id.Equals(value.Id));
+            var result = Repositoryset.SingleOrDefault(p => p.Id.Equals(value.Id));
             if (result != null)
             {
                 try
@@ -57,12 +57,12 @@ namespace Data.SQLServer
 
         public void Delete(int id)
         {
-            var result = dataset.SingleOrDefault(p => p.Id.Equals(id));
+            var result = Repositoryset.SingleOrDefault(p => p.Id.Equals(id));
             if (result != null)
             {
                 try
                 {
-                    dataset.Remove(result);
+                    Repositoryset.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -73,7 +73,7 @@ namespace Data.SQLServer
         }
 
         public bool Exists(int id)
-            => dataset.Any(p => p.Id.Equals(id));
+            => Repositoryset.Any(p => p.Id.Equals(id));
     }
 }
 

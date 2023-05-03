@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Model
+namespace Repository.Model
 {
     public class BaseEntity
     {

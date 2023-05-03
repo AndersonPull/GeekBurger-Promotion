@@ -1,7 +1,7 @@
 ﻿using System;
-using Data.Model;
+using Repository.Model;
 
-namespace Data.SQLServer.Promotion
+namespace Repository.SQLServer.Promotion
 {
 	public interface IPromotionRepository : IRepository<PromotionEntity>
     {
