@@ -41,9 +41,7 @@ namespace BLL.Promotion.Implementation
             var products = Util.ConverterStringToListInt(response.ProductsId);
 
             foreach(var product in products)
-            {
                 response.Products.Add(_productServe.GetProductById(product));
-            }
 
             return response;
         }

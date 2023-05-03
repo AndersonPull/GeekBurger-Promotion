@@ -12,6 +12,8 @@ Repository.DependencyInjection.ConfigureServices(builder.Services);
 
 BLL.DependencyInjection.ConfigureServices(builder.Services);
 
+Services.DependencyInjection.ConfigureServices(builder.Services);
+
 builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
 {
     builder.AllowAnyOrigin()

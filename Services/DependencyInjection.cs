@@ -10,10 +10,9 @@ namespace Services
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IServiceBus, ServiceBus.Implementation.ServiceBus>();
-
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IServiceBus, ServiceBus.Implementation.ServiceBus>();
         }
     }
 }
-
