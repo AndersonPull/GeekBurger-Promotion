@@ -9,16 +9,19 @@
   <ItemGroup>
     <None Remove="ServiceBus\" />
     <None Remove="ServiceBus\Implementation\" />
+    <None Remove="Produtos\" />
+    <None Remove="Produtos\Implementation\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ServiceBus\" />
     <Folder Include="ServiceBus\Implementation\" />
+    <Folder Include="Produtos\" />
+    <Folder Include="Produtos\Implementation\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 </Project>

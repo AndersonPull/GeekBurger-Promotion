@@ -1,6 +1,8 @@
 ﻿using System;
 using Services.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
+using Services.Produtos;
+using Services.Produtos.Implementation;
 
 namespace Services
 {
@@ -8,7 +10,9 @@ namespace Services
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IServiceBus, Services.ServiceBus.Implementation.ServiceBus>();
+            services.AddScoped<IServiceBus, ServiceBus.Implementation.ServiceBus>();
+
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }

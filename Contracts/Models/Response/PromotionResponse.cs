@@ -18,7 +18,10 @@ namespace Contracts.Models.Response
         [Required(ErrorMessage = "a Imagem é obrigatória.")]
         public string? Image { get; set; }
 
-        public List<ProductResponse>? Products { get; set; }
+        public List<ProductResponse>? Products { get; set; } = new List<ProductResponse>();
+
+        [SwaggerExclude]
+        public string? ProductsId { get; set; }
 
         [Required(ErrorMessage = "O Preço é obrigatório.")]
         public decimal Price { get; set; }

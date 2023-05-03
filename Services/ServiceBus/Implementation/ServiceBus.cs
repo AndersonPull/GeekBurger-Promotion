@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Microsoft.Azure.ServiceBus;
 
 namespace Services.ServiceBus.Implementation

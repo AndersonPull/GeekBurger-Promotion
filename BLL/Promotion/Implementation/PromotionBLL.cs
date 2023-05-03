@@ -2,11 +2,13 @@
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
 using BLL.Mapper;
+using BLL.Utils;
 using Contracts.Models.Request;
 using Contracts.Models.Response;
 using Repository.Model;
 using Repository.SQLServer;
 using Repository.SQLServer.Promotion;
+using Services.Produtos;
 
 namespace BLL.Promotion.Implementation
 {
@@ -15,11 +17,35 @@ namespace BLL.Promotion.Implementation
         private readonly IRepository<PromotionEntity> _repository;
         private readonly IPromotionRepository _promotionRepository;
         private readonly IMapper _mapper = AccessMapper.CreateMapper();
+        private readonly IProductService _productServe;
 
-        public PromotionBLL(IRepository<PromotionEntity> repository, IPromotionRepository promotionRepository)
+        public PromotionBLL
+        (
+            IRepository<PromotionEntity> repository,
+            IPromotionRepository promotionRepository,
+            IProductService productServe
+        )
         {
             _repository = repository;
             _promotionRepository = promotionRepository;
+            _productServe = productServe;
+        }
+
+        public PromotionResponse GetByStoreName(string StoreName)
+        {
+            var response = _mapper.Map<PromotionResponse>(_promotionRepository.FindByStoreName(StoreName));
+
+            if (response == null)
+                return null;
+
+            var products = Util.ConverterStringToListInt(response.ProductsId);
+
+            foreach(var product in products)
+            {
+                response.Products.Add(_productServe.GetProductById(product));
+            }
+
+            return response;
         }
 
         public void Create(PromotionRequest model)
@@ -42,14 +68,6 @@ namespace BLL.Promotion.Implementation
 
             return response;
         }
-            
-
-        public PromotionResponse GetByStoreName(string StoreName)
-        {
-            var response = _mapper.Map<PromotionResponse>(_promotionRepository.FindByStoreName(StoreName));
-            //TODO buscar produtos
-            return response;
-        }
 
         public void Update(PromotionRequest model)
         {
@@ -67,8 +85,6 @@ namespace BLL.Promotion.Implementation
 
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Deleted;
-
-            //TODO buscar produtos
             //TODO mandar para azurebus
             _promotionRepository.Delete(value);
         }
