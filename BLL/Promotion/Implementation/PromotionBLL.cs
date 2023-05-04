@@ -9,6 +9,7 @@ using Repository.Model;
 using Repository.SQLServer;
 using Repository.SQLServer.Promotion;
 using Services.Produtos;
+using Services.ServiceBus;
 
 namespace BLL.Promotion.Implementation
 {
@@ -18,17 +19,20 @@ namespace BLL.Promotion.Implementation
         private readonly IPromotionRepository _promotionRepository;
         private readonly IMapper _mapper = AccessMapper.CreateMapper();
         private readonly IProductService _productServe;
+        private readonly IServiceBus _serviceBus;
 
         public PromotionBLL
         (
             IRepository<PromotionEntity> repository,
             IPromotionRepository promotionRepository,
-            IProductService productServe
+            IProductService productServe,
+            IServiceBus serviceBus
         )
         {
             _repository = repository;
             _promotionRepository = promotionRepository;
             _productServe = productServe;
+            _serviceBus = serviceBus;
         }
 
         public PromotionResponse GetByStoreName(string StoreName)
@@ -52,8 +56,12 @@ namespace BLL.Promotion.Implementation
 
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Added;
-            //TODO buscar produtos
-            //TODO mandar para azurebus
+
+            var products = Util.ConverterStringToListInt(response.ProductsId);
+            foreach (var product in products)
+                promotion.Products.Add(_productServe.GetProductById(product));
+
+            _serviceBus.Send("json", "geekburguerpromotion");
         }
 
         public IEnumerable<PromotionResponse> GetAll()
@@ -62,8 +70,15 @@ namespace BLL.Promotion.Implementation
                 .Map<IEnumerable<PromotionResponse>>(_promotionRepository
                 .FindAll());
 
-            //TODO buscar produtos
+            if (response == null)
+                return null;
 
+            foreach (var promotion in response)
+            {
+                var products = Util.ConverterStringToListInt(promotion.ProductsId);
+                foreach (var product in products)
+                    promotion.Products.Add(_productServe.GetProductById(product));
+            }
             return response;
         }
 
@@ -71,10 +86,13 @@ namespace BLL.Promotion.Implementation
         {
             var response = _promotionRepository.Update(_mapper.Map<PromotionEntity>(model));
             var promotion = _mapper.Map<PromotionResponse>(response);
-
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Modified;
-            //TODO buscar produtos
-            //TODO mandar para azurebus
+
+            var products = Util.ConverterStringToListInt(response.ProductsId);
+            foreach (var product in products)
+                promotion.Products.Add(_productServe.GetProductById(product));
+
+            _serviceBus.Send("json", "geekburguerpromotion");
         }
 
         public void Delete(int value)
@@ -83,7 +101,9 @@ namespace BLL.Promotion.Implementation
 
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Deleted;
-            //TODO mandar para azurebus
+
+            _serviceBus.Send("json", "geekburguerpromotion");
+
             _promotionRepository.Delete(value);
         }
     }
