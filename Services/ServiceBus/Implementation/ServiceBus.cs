@@ -1,21 +1,23 @@
 ﻿using System.Text;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.Extensions.Configuration;
 
 namespace Services.ServiceBus.Implementation
 {
 	public class ServiceBus : IServiceBus
 	{
-        public ServiceBus()
+        private readonly IConfiguration _configuracao;
+        public ServiceBus(IConfiguration configuracao)
 		{
-		}
+            _configuracao = configuracao;
+        }
 
         public async Task Send(string message, string queue)
         {
-            QueueClient queueClient = new QueueClient("Endpoint=sb://geekburguerpromotion.servicebus.windows.net/;SharedAccessKeyName=AndersonGeekBurguer;SharedAccessKey=JHqAhBmE/2XylYm+Ej/U4RcwiXGQyG5zr+ASbJwFkio=;EntityPath=geekburguerpromotion", queue);
+            QueueClient queueClient = new QueueClient(_configuracao["ServicebusServer"], queue);
 
             Message messagebus = new Message(Encoding.UTF8.GetBytes(message));
             await queueClient.SendAsync(messagebus);
         }
     }
 }
-

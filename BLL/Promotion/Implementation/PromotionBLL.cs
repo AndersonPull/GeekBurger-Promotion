@@ -10,6 +10,8 @@ using Repository.SQLServer;
 using Repository.SQLServer.Promotion;
 using Services.Produtos;
 using Services.ServiceBus;
+using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace BLL.Promotion.Implementation
 {
@@ -20,39 +22,46 @@ namespace BLL.Promotion.Implementation
         private readonly IMapper _mapper = AccessMapper.CreateMapper();
         private readonly IProductService _productServe;
         private readonly IServiceBus _serviceBus;
+        private readonly IConfiguration _configuracao;
 
         public PromotionBLL
         (
             IRepository<PromotionEntity> repository,
             IPromotionRepository promotionRepository,
             IProductService productServe,
-            IServiceBus serviceBus
+            IServiceBus serviceBus,
+            IConfiguration configuracao
         )
         {
             _repository = repository;
             _promotionRepository = promotionRepository;
             _productServe = productServe;
             _serviceBus = serviceBus;
+            _configuracao = configuracao;
         }
 
-        public PromotionResponse GetByStoreName(string StoreName)
+        public IEnumerable<PromotionResponse> GetByStoreName(string StoreName)
         {
-            var response = _mapper.Map<PromotionResponse>(_promotionRepository.FindByStoreName(StoreName));
+            var response = _mapper
+                .Map<IEnumerable<PromotionResponse>>(_promotionRepository.FindByStoreName(StoreName));
 
             if (response == null)
                 return null;
 
-            var products = Util.ConverterStringToListInt(response.ProductsId);
-
-            foreach(var product in products)
-                response.Products.Add(_productServe.GetProductById(product));
+            foreach (var promotion in response)
+            {
+                var products = Util.ConverterStringToListInt(promotion.ProductsId);
+                foreach (var product in products)
+                    promotion.Products.Add(_productServe.GetProductById(product));
+            }
 
             return response;
         }
 
         public void Create(PromotionRequest model)
         {
-            var response = _promotionRepository.Create(_mapper.Map<PromotionEntity>(model));
+            var response = _promotionRepository
+                .Create(_mapper.Map<PromotionEntity>(model));
 
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Added;
@@ -61,7 +70,8 @@ namespace BLL.Promotion.Implementation
             foreach (var product in products)
                 promotion.Products.Add(_productServe.GetProductById(product));
 
-            _serviceBus.Send("json", "geekburguerpromotion");
+            promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Added;
+            _serviceBus.Send(JsonConvert.SerializeObject(promotion), _configuracao["ServiceBusFila"]);
         }
 
         public IEnumerable<PromotionResponse> GetAll()
@@ -79,12 +89,15 @@ namespace BLL.Promotion.Implementation
                 foreach (var product in products)
                     promotion.Products.Add(_productServe.GetProductById(product));
             }
+
             return response;
         }
 
         public void Update(PromotionRequest model)
         {
-            var response = _promotionRepository.Update(_mapper.Map<PromotionEntity>(model));
+            var response = _promotionRepository
+                .Update(_mapper.Map<PromotionEntity>(model));
+
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Modified;
 
@@ -92,7 +105,8 @@ namespace BLL.Promotion.Implementation
             foreach (var product in products)
                 promotion.Products.Add(_productServe.GetProductById(product));
 
-            _serviceBus.Send("json", "geekburguerpromotion");
+            promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Modified;
+            _serviceBus.Send(JsonConvert.SerializeObject(promotion), _configuracao["ServiceBusFila"]);
         }
 
         public void Delete(int value)
@@ -101,8 +115,7 @@ namespace BLL.Promotion.Implementation
 
             var promotion = _mapper.Map<PromotionResponse>(response);
             promotion.PromotionState = Contracts.Enums.PromotionStateEnum.Deleted;
-
-            _serviceBus.Send("json", "geekburguerpromotion");
+            _serviceBus.Send(JsonConvert.SerializeObject(promotion), _configuracao["ServiceBusFila"]);
 
             _promotionRepository.Delete(value);
         }

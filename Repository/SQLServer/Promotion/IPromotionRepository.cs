@@ -5,6 +5,6 @@ namespace Repository.SQLServer.Promotion
 {
 	public interface IPromotionRepository : IRepository<PromotionEntity>
     {
-        PromotionEntity FindByStoreName(string storeName);
+        List<PromotionEntity> FindByStoreName(string storeName);
     }
 }

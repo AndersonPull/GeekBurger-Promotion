@@ -26,6 +26,7 @@ namespace Contracts.Models.Response
         [Required(ErrorMessage = "O Preço é obrigatório.")]
         public decimal Price { get; set; }
 
+        [SwaggerExclude]
         public PromotionStateEnum PromotionState { get; set; }
     }
 }

@@ -21,12 +21,12 @@ namespace GeekBurger_Promotion.Controllers
         }
 
         [HttpGet("{storeName}")]
-        [ProducesResponseType(typeof(PromotionResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<PromotionResponse>), StatusCodes.Status200OK)]
         public IActionResult Get([FromRoute] string storeName)
         {
             var response = _bll.GetByStoreName(storeName);
 
-            if (response == null)
+            if (!response.Any())
                 return NoContent();
 
             return Ok(response);

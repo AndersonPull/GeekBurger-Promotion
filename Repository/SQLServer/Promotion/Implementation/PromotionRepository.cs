@@ -9,8 +9,8 @@ namespace Repository.SQLServer.Promotion.Implementation
     {
         public PromotionRepository(RepositoryContext context) : base(context) { }
 
-        public PromotionEntity FindByStoreName(string storeName)
-            => _context.Promotion.SingleOrDefault(promotion => promotion.StoreName.Equals(storeName));
+        public List<PromotionEntity> FindByStoreName(string storeName)
+            => _context.Promotion.Where(promotion => promotion.StoreName.Equals(storeName)).ToList();
     }
 }
 

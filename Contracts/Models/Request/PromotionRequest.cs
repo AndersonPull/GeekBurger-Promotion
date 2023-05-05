@@ -7,7 +7,6 @@ namespace Contracts.Models.Request
 {
 	public class PromotionRequest
 	{
-        [SwaggerExclude]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O nome é obrigatório.")]

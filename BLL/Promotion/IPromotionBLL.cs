@@ -6,7 +6,7 @@ namespace BLL.Promotion
 {
     public interface IPromotionBLL
     {
-        PromotionResponse GetByStoreName(string StoreName);
+        IEnumerable<PromotionResponse> GetByStoreName(string StoreName);
 
         IEnumerable<PromotionResponse> GetAll();
 
