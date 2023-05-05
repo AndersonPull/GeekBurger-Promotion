@@ -15,11 +15,8 @@ namespace Contracts.SwaggerExclude
             {
                 var excludedPropertyName = excludedProperty.Name.ToCamelCase();
                 if (schema.Properties.ContainsKey(excludedPropertyName))
-                {
                     schema.Properties.Remove(excludedPropertyName);
-                }
             }
         }
     }
 }
-
