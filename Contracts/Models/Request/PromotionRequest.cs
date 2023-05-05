@@ -24,4 +24,3 @@ namespace Contracts.Models.Request
         public decimal Price { get; set; }
     }
 }
-
