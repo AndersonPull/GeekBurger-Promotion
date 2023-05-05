@@ -30,4 +30,3 @@ namespace Contracts.Models.Response
         public PromotionStateEnum PromotionState { get; set; }
     }
 }
-
