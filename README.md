@@ -1,13 +1,9 @@
 # GeekBurger-Promotion
 
-
-## linke para o swagger
-https://geekburgerpromotion.azurewebsites.net/swagger/index.html
-
-
+## Documentação
 <img width="800" src="https://github.com/AndersonPull/GeekBurger-Promotion/blob/main/imgs/new.jpeg">
 
-## Definição dos Contratos: APIs - WebAPIs 
+### Definição dos Contratos: APIs - WebAPIs 
 PromotionRequest 
 { 
   "id": 0, 
@@ -39,7 +35,7 @@ PromotionResponse
   } 
 ] 
 
-## Definição dos Contratos: Payload de mensagens -  ServiceBus
+### Definição dos Contratos: Payload de mensagens -  ServiceBus
 
 { 
     "id": 0, 
@@ -59,3 +55,6 @@ PromotionResponse
     "price": 10.0, 
     "PromotionState": 2 
   } 
+  
+### linke para o swagger
+https://geekburgerpromotion.azurewebsites.net/swagger/index.html
